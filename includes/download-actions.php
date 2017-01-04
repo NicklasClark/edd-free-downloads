@@ -127,9 +127,7 @@ function edd_free_download_process() {
 	$payment->gateway    = 'manual';
 	$payment->status     = 'pending';
 
-	$cart_details   = array();
-	$price_ids      = isset( $_POST['edd_free_download_price_id'] ) ? $_POST['edd_free_download_price_id'] : false;
-	$download_files = array();
+	$price_ids = isset( $_POST['edd_free_download_price_id'] ) ? $_POST['edd_free_download_price_id'] : false;
 
 	if ( $price_ids ) {
 
@@ -138,8 +136,6 @@ function edd_free_download_process() {
 			if ( ! edd_is_free_download( $download_id, $price_id ) ) {
 				wp_die( __( 'An internal error has occurred, please try again or contact support.', 'edd-free-downloads' ), __( 'Oops!', 'edd-free-downloads' ) );
 			}
-
-			$download_files[] = edd_get_download_files( $download_id, $price_id );
 
 			$payment->add_download( $download_id, array(
 				'price_id'   => $price_id,
@@ -153,8 +149,6 @@ function edd_free_download_process() {
 		if ( ! edd_is_free_download( $download_id ) ) {
 			wp_die( __( 'An internal error has occurred, please try again or contact support.', 'edd-free-downloads' ), __( 'Oops!', 'edd-free-downloads' ) );
 		}
-
-		$download_files[] = edd_get_download_files( $download_id, false );
 
 		$payment->add_download( $download_id, array(
 			'price_id'   => $price_id
